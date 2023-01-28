@@ -1,3 +1,6 @@
+# Basic configuration: Production/Development/Testing
+# Depreciated: replaced by using Flask-DotEnv 
+
 import os
 from os import environ
 
@@ -15,7 +18,6 @@ class ProductionConfig(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 class DevelopmentConfig(Config):
-    print(os.getenv)
     FLASK_ENV = "development"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
@@ -23,4 +25,3 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     FLASK_ENV = "testing"
-    

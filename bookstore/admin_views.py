@@ -1,3 +1,4 @@
+# Views for admin function
 import jwt
 from bookstore import app
 from flask import render_template
@@ -9,21 +10,13 @@ from datetime import datetime, timedelta
 
 bcrypt = Bcrypt(app)
 
-@app.route("/admin/dashboard")
-def admin_dashboard():
-    return render_template("admin/dashboard.html")
 
-
-@app.route("/admin/profile")
-def admin_profile():
-    return "Admin Profile"
+# =====================================================================================================================
+# User functions
 
 # ---------------------------------------------------------------------------------------------------------------------
-# User functions
-# Login
-
-# Home
-
+# 
+# Route to index page
 @app.route("/")
 def index():
     if not session.get("username"):
@@ -31,78 +24,89 @@ def index():
     else:
         return render_template("public/book/base.html")
 
-
+# ---------------------------------------------------------------------------------------------------------------------
+# 
+# Route to register page
+# Depreciated: used for adding user admin and boss
 @app.route("/register", methods=["POST"])
 def register():
     row_affected = 0
-    post = request.form
     username = request.form["username"].strip()
     password = request.form["password"]
     if username and password:
 
         hashed_password = bcrypt.generate_password_hash(password)
-        print(hashed_password)
         row_affected = User.add_user(username, hashed_password)
-        print("row_affected", row_affected)
         return f"The user {username} is added successfully."
     else:
         return "problems on username/password"
 
+# ---------------------------------------------------------------------------------------------------------------------
+# 
+# Route to logout page
 @app.route("/logout", methods=["GET"])
 def logout():
+    # If username session exists, delete username session
     if "username" in session:
         del session["username"]
+    # If token session exists, delete token session
     if "token" in session:
         del session["token"]
     return render_template("public/book/base.html")
 
+# ---------------------------------------------------------------------------------------------------------------------
+# 
+# Route to login page
 @app.route("/login", methods=["GET", "POST"])
 def login():
     message = None
+    # POST method to load the login page
     if request.method == "POST": 
         username = request.form["username"].strip()
         password = request.form["password"]
+        # if username and password exists, check the existence of username and correctness of password
         if username and password:
             user = User.find_user(username)
             token = None
+            # If the username is found, check the correctness of password
             if user:
-                # print("user", len(user), user[0])
                 hashed_password = user[0].user_password
-                print("hashed password", len(user), hashed_password)
+                # If the passwords are matched, store the usename in the session
                 if bcrypt.check_password_hash(hashed_password, password):
-                    session["username"] = username                    
+                    session["username"] = username
+                    # Create token from JWT                    
                     token = jwt.encode({
                         "user": username,
                         "expiration": str(datetime.utcnow() + timedelta(seconds=300))
                     },
                         app.config["SECRET_KEY"], algorithm="HS256"
                     )
-                    print(f"{username} is logged with token {token}")
+                    # Store token session
                     session["token"] = token
                     return render_template("public/book/base.html")
-                    # return jsonify({"token": token})
-                    # return jsonify({"token": token})
+                # If the username/password is not matched, flash message to notify the user
                 else:
                     message = f"The useranme/password is not matched."
                     flash(message)
                     return render_template("public/book/login.html")
-                    # return make_response("Unable to verify", 403, {"WWW-Authenicate": "Basic realm: Authentication Failed!" })
-            else:
-                # no such user
+            # If no username is matched, flash message to notify the user
+            else:                
                 message = f"The useranme/password is not matched."
                 flash(message)
                 return render_template("public/book/base.html")
-
+        # If the username/password is blank, flash message to notify the user
         else:
             message = f"The useranme/password cannot be blank."
             flash(message)
             return render_template("public/book/base.html")
-    else:
-        # GET method to load login page
+    # GET method to load login page
+    else:        
         return render_template("public/book/login.html")
 
+# ---------------------------------------------------------------------------------------------------------------------
+# JWT
 # Depreciated but keep it for future reference
-
+# token_required decorated
 def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
@@ -115,8 +119,10 @@ def token_required(func):
         except:
             return jsonify({"Alert": "Invalid token."}), 403
     return decorated
-        # return func(*args, **kwargs)
 
+# ---------------------------------------------------------------------------------------------------------------------
+
+# login_required decorated
 def login_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
@@ -129,14 +135,3 @@ def login_required(func):
             return redirect(url_for("login"))
         return func(*args, **kwargs)
     return decorated
-
-# # Public
-# @app.route ("/public")
-# def public():
-#     return "For public"
-
-# # Auth
-# @app.route("/auth")
-# @token_required
-# def auth():
-#     return "JWT is verified. Welcome to your dashboard."
