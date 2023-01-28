@@ -4,7 +4,7 @@ from datetime import datetime
 from bookstore import app
 from flask import Flask, render_template, request, redirect, make_response, jsonify, flash, session, url_for
 from .models import User, Book, Review
-from .admin_views import token_required, login_required
+from .admin_views import token_required, login_required, is_logged
 
 # =====================================================================================================================
 # Create session_token function to check existence of token session

@@ -19,10 +19,7 @@ bcrypt = Bcrypt(app)
 # Route to index page
 @app.route("/")
 def index():
-    if not session.get("username"):
-        return render_template("public/book/login.html")
-    else:
-        return render_template("public/book/base.html")
+    return render_template("public/book/base.html")
 
 # ---------------------------------------------------------------------------------------------------------------------
 # 
@@ -53,6 +50,16 @@ def logout():
     if "token" in session:
         del session["token"]
     return render_template("public/book/base.html")
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Check login status
+def is_logged(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if "username" not in session:
+            return redirect(url_for("login"))
+        return func(*args, **kwargs)
+    return decorated
 
 # ---------------------------------------------------------------------------------------------------------------------
 # 
