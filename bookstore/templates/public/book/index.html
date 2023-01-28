@@ -1,0 +1,174 @@
+{% extends 'public/book/base.html' %} 
+
+{% block title %} Search {% endblock %} 
+
+
+
+{% block main %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#search_criteria").change(function () {
+      if ($(this).val() === "quantity") {
+        $("#search_input").hide();
+        $("#search_input").val("");
+        $("#quantity_search_inputs").show();
+      } else {
+        $("#search_input").show();
+        $("#quantity_min").val("");
+        $("#quantity_max").val("");
+        $("#quantity_search_inputs").hide();
+      }
+    });
+
+    if ($("#search_criteria").val() === "quantity") {
+      $("#search_input").hide();
+      $("#quantity_search_inputs").show();
+    }
+  });
+
+  $(document).ready(function () {
+    $('#example').DataTable({
+        fixedHeader: true,
+        dom: '<"top"fl>rt<"bottom"ip><"clear">',
+        paging: true,
+        searching: false, 
+        scrollY: '800px',
+        scrollCollapse: true,
+        "fnDrawCallback": function (oSettings) {
+        $('.paginate_button.current').addClass('btn btn-outline-light btn-sm');
+        $(".standardDataTable").parent().toggle(settings.fnRecordsDisplay() > 0);        
+      }     
+    });
+  });
+
+  function handleClear() {
+    $("#search_criteria").val("Search criteria...");
+    $("#search_input").val("");    
+    $("#quantity_min").val("");
+    $("#quantity_max").val("");
+    $("#records").html("");
+    // $("#example").html("")
+
+  }
+
+</script>
+
+
+
+<div class="container text-center" style="width: 100%">
+  <div>
+    <h2 class="my-header fw-bold mb-2 text-center py-4">Book Query</h2>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+            <ul class="flashes list-unstyled">
+    {% for message in messages %}
+                <li><h6>{{ message |safe }}</h6></li>
+    {% endfor %}
+            </ul>
+  {% endif %}
+{% endwith %}
+  </div>
+
+  <form action="/book/search" method="post">
+    <div class="row">
+      <div class="col-sm-2 pl-2">
+        <select class="form-select form-select-sm" name="search_criteria" id="search_criteria">
+          <option selected>Search criteria...</option>
+          <option value="title" {% if search_dictionary.search_criteria == 'title' %}selected{% endif %} >Title</option>
+          <option value="author" {% if search_dictionary.search_criteria == 'author' %}selected{% endif %}>Author</option>
+          <option value="description" {% if search_dictionary.search_criteria == 'description' %}selected{% endif %}>Description</option>
+{% if 'username' in session %}
+          <option value="quantity" {% if search_dictionary.search_criteria == 'quantity' %}selected{% endif %}>Quantity</option>
+{% endif %}
+        </select>
+      </div>
+
+      <div class="col-sm-7 px-0">
+        <input class="form-control form-control-sm" type="text" id="search_input" name="search_input" placeholder="..." value="{{ search_dictionary.search_input }}" />
+        <div id="quantity_search_inputs" style="display: none">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="min-max-inputs" style="display: flex; align-items: center">
+                <input class="form-control form-control-sm" type="number" id="quantity_min" name="quantity_min" value="{{ search_dictionary.quantity_min }}"placeholder="min"/>
+              </div>
+            </div>
+            <div class="col-sm-6 px-0">
+              <input class="form-control form-control-sm" type="number" id="quantity_max" name="quantity_max" value="{{ search_dictionary.quantity_max }}" placeholder="max"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3 px-0">
+        <button name="search" style="width: 140px" type="submit" class="btn btn-outline-light btn-sm"><i class="fa fa-search"></i> Search</button>
+        <button name="search" style="width: 140px" type="button" onClick="handleClear()" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-rotate-left"></i> Clear</button>
+      </div>
+    </div>
+    <div>
+      <hr>
+    </div>
+  </form>
+</div>
+
+<div class="container text-end">
+{% if 'username' in session %}
+  <form action="/book/form" method="post">
+      <button class="btn btn-outline-light btn-sm" style="width: 140px;margin-right:10px" type="submit" name="book_action" value="add"><i class="fa-solid fa-plus"></i> Add book</button>
+  </form>
+{% endif %}
+</div>
+
+{% if books %}
+<div class="container bg-light text-dark">
+  <table id="example" class="table table-striped display" style="width:100%">
+    <thead>
+      <tr class="bg-light text-dark">
+        <th class="text-center">#</th>
+        <th class="text-center" style="width:20%">Title</th>
+        <th class="text-center" style="width:8%">Author</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-center" style="width:8%">Created</th>
+        <th class="text-center" style="width:8%">Updated</th>
+{% if 'username' in session %}
+        <th class="text-center" style="width:10%">Action</th>
+{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+      <tr class="bg-light text-dark">        
+          <td class="align-top text-dark">{{ loop.index }}</td>
+          <td class="align-top text-dark">{{ book.book_title }} </td>
+          <td class="align-top text-dark">{{ book.book_author }}</td>
+          <td class="align-top text-dark">{{ book.book_description }} </td>
+          <td class="text-center align-top text-dark">{{ book.book_quantity }}</td>
+          <td class="align-top text-dark">{{ book.book_created_date |datetime }}</td>
+          <td class="align-top text-dark">{{ book.book_updated_date |datetime }} </td>
+          {% if 'username' in session %}
+          <form action="/book/form" method="post">
+          <td class="align-top text-dark">
+            <input type="hidden" name="book_id" value="{{ book.book_id }}" />
+            <button class="btn btn-outline-dark btn-sm" style="padding-left:15px; width:30px" type="submit" name="book_action" value="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="btn btn-outline-dark btn-sm" style="padding-left:15px; width:30px" type="submit" name="book_action" value="remove"><i class="fa-solid fa-trash"></i></button>
+          {% endif %}
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+  {% else  %}
+      {% if search_dictionary|length > 0 and not get_flashed_messages() %}
+        <p id="records" align="center">No records found.</p>
+      {% endif %}
+{% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock%}
+
+
+{% block footer %}
+{% endblock %}

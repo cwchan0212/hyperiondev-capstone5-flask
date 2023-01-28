@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title  %} Home {% endblock %}</title>
+    
+
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.js" integrity="sha512-nO7wgHUoWPYGCNriyGzcFwPSF+bPDOR+NvtOYy2wMcWkrnCNPKBcFEkU80XIN14UVja0Gdnff9EmydyLlOL7mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap2.min.css') }}" class="css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" class="css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Black-Navbar.css') }}" class="css">
+    <!-- custom CSS -->
+    {% block stylesheet %}
+      
+
+    {% endblock%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Banner-Heading-Image-images.css') }}" class="css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" class="css">
+    <!-- custom js -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height:80px;background-color:#37434d;color:#ffffff;">
+            <div class="container-fluid"><a class="navbar-brand pe-none" href="#"><i class="fas fa-book"></i>{% if 'username' in session %} Welcome, {{ session.username }}!{% else %} Read Up{% endif %}</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color:#ffffff;" href="/book"><i class="fa fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color:#ffffff;" href="/book/search"><i class="fa-solid fa-book"></i> Book</a>
+                        </li>
+                        {% if 'username' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color:#ffffff;" href="/book/api"><i class="fa-solid fa-key"></i> API</a>
+                        </li>
+                        {% endif %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" style="color:#ffffff;" href="/book/contact"><i class="fa-regular fa-address-book"></i> Contact</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            {% if 'username' in session %}
+                            <a class="nav-link active" style="color: #ffffff;background: var(--bs-navbar-active-color);border-radius: 15px;" href="/logout">Logout</a>
+                            {% else %}
+                            <a class="nav-link active" style="color: #ffffff;background: var(--bs-navbar-active-color);border-radius: 15px;" href="/login">Login</a>
+                            {% endif %}                        
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+{% block main %}
+   
+    <header class="masthead py-0 mb-0" style="background-image:url('{{ url_for('static', filename='img/bg.png') }}');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto position-relative">
+                    <div class="site-heading">
+                        <h1 class="my-header">Read Up</h1><span class="subheading" style="font-weight: bolder">The ultimate destination for book lovers<br></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}  
+
+{% block footer %}
+    <section id="contact" class="py-0 py-xl-3 bg-dark">
+        <div class="container text-center text-light" style="border-radius: 0">
+            <h1><a class="my-header nav-link active" href="#home">Contact</a></h1>
+            <p>Hope I can contribute my skills and qualities to your company. Let's work together...</p>
+        </div>
+    </section>
+
+<footer class="py-2 bg-dark">
+    <div class="container text-light">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start d-md-flex justify-content-md-start align-items-md-center py-2">
+                <div>
+                    <p class="fs-5 fw-bold mb-0">Crafted by Eddy Chan<br /></p>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-center align-items-center justify-content-md-end py-2">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <a class="text-light" href="https://www.linkedin.com/in/cwchanst/" target="_blank"><i class="fab fa-linkedin fs-1 me-2"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-light" href="https://github.com/cwchan0212" target="_blank"><i class="fab fa-github fs-1 me-2"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-light" href="mailto:cwchanst@gmail.com"><i class="far fa-envelope fs-1 me-2"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock footer %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/clean-blog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Navbar---Apple.js') }}"></script>
+</body>
+
+</html>
