@@ -43,7 +43,13 @@ class User(db.Model):
             db.session.rollback()
             raise()
         return rowcount
-
+# ---------------------------------------------------------------------------------------------------------------------
+# Create login_time function to update the last login time.
+    def login_time(username):
+        user = User.query.filter_by(user_username=username).first()
+        user.user_updated_date = datetime.now()
+        db.session.commit()
+        return user
 # ---------------------------------------------------------------------------------------------------------------------
 # Create find_user function to get the user by username
     def find_user(username):

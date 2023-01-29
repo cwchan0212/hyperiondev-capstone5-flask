@@ -1,18 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title  %} Bookstore Management System {% endblock %}</title>
-    
-
-    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.js" integrity="sha512-nO7wgHUoWPYGCNriyGzcFwPSF+bPDOR+NvtOYy2wMcWkrnCNPKBcFEkU80XIN14UVja0Gdnff9EmydyLlOL7mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,15 +15,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Black-Navbar.css') }}" class="css">
     <!-- custom CSS -->
     {% block stylesheet %}
-      
-
     {% endblock%}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Banner-Heading-Image-images.css') }}" class="css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" class="css">
     <!-- custom js -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
-
 <body>
     <div>
         <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button" style="height:80px;background-color:#37434d;color:#ffffff;">
@@ -47,11 +37,9 @@
                             <a class="nav-link active" style="color:#ffffff;" href="/book/api"><i class="fa-solid fa-key"></i> API</a>
                         </li>
                         {% endif %}
-                        
                         <li class="nav-item">
                             <a class="nav-link active" style="color:#ffffff;" href="/book/contact"><i class="fa-regular fa-address-book"></i> Contact</a>
                         </li>
-                        
                         <li class="nav-item">
                             {% if 'username' in session %}
                             <a class="nav-link active" style="color: #ffffff;background: var(--bs-navbar-active-color);border-radius: 15px;" href="/logout">Logout</a>
@@ -65,7 +53,6 @@
         </nav>
     </div>
 {% block main %}
-   
     <header class="masthead py-0 mb-0" style="background-image:url('{{ url_for('static', filename='img/bg.png') }}');">
         <div class="overlay"></div>
         <div class="container">
@@ -79,7 +66,6 @@
         </div>
     </header>
 {% endblock %}  
-
 {% block footer %}
     <section id="contact" class="py-0 py-xl-3 bg-dark">
         <div class="container text-center text-light" style="border-radius: 0">
@@ -87,7 +73,6 @@
             <p>Hope I can contribute my skills and qualities to your company. Let's work together...</p>
         </div>
     </section>
-
 <footer class="py-2 bg-dark">
     <div class="container text-light">
         <div class="row">
@@ -117,5 +102,4 @@
     <script src="{{ url_for('static', filename='js/clean-blog.js') }}"></script>
     <script src="{{ url_for('static', filename='js/Navbar---Apple.js') }}"></script>
 </body>
-
 </html>

@@ -1,62 +1,9 @@
 {% extends 'public/book/base.html' %} 
-
 {% block title %} Bookstore Management System {% endblock %} 
-
-
-
 {% block main %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $("#search_criteria").change(function () {
-      if ($(this).val() === "quantity") {
-        $("#search_input").hide();
-        $("#search_input").val("");
-        $("#quantity_search_inputs").show();
-      } else {
-        $("#search_input").show();
-        $("#quantity_min").val("");
-        $("#quantity_max").val("");
-        $("#quantity_search_inputs").hide();
-      }
-    });
-
-    if ($("#search_criteria").val() === "quantity") {
-      $("#search_input").hide();
-      $("#quantity_search_inputs").show();
-    }
-  });
-
-  $(document).ready(function () {
-    $('#example').DataTable({
-        fixedHeader: true,
-        dom: '<"top"fl>rt<"bottom"ip><"clear">',
-        paging: true,
-        searching: false, 
-        scrollY: '800px',
-        scrollCollapse: true,
-        "fnDrawCallback": function (oSettings) {
-        $('.paginate_button.current').addClass('btn btn-outline-light btn-sm');
-        $(".standardDataTable").parent().toggle(settings.fnRecordsDisplay() > 0);        
-      }     
-    });
-  });
-
-  function handleClear() {
-    $("#search_criteria").val("Search criteria...");
-    $("#search_input").val("");    
-    $("#quantity_min").val("");
-    $("#quantity_max").val("");
-    $("#records").html("");
-    // $("#example").html("")
-
-  }
-
-</script>
-
-
-
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <div class="container text-center" style="width: 100%">
   <div>
     <h2 class="my-header fw-bold mb-2 text-center py-4">Book Query</h2>
@@ -70,7 +17,6 @@
   {% endif %}
 {% endwith %}
   </div>
-
   <form action="/book/search" method="post">
     <div class="row">
       <div class="col-sm-2 pl-2">
@@ -84,7 +30,6 @@
 {% endif %}
         </select>
       </div>
-
       <div class="col-sm-7 px-0">
         <input class="form-control form-control-sm" type="text" id="search_input" name="search_input" placeholder="..." value="{{ search_dictionary.search_input }}" />
         <div id="quantity_search_inputs" style="display: none">
@@ -100,7 +45,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-sm-3 px-0">
         <button name="search" style="width: 140px" type="submit" class="btn btn-outline-light btn-sm"><i class="fa fa-search"></i> Search</button>
         <button name="search" style="width: 140px" type="button" onClick="handleClear()" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-rotate-left"></i> Clear</button>
@@ -111,15 +55,13 @@
     </div>
   </form>
 </div>
-
 <div class="container text-end">
 {% if 'username' in session %}
   <form action="/book/form" method="post">
       <button class="btn btn-outline-light btn-sm" style="width: 140px;margin-right:10px" type="submit" name="book_action" value="add"><i class="fa-solid fa-plus"></i> Add book</button>
-  </form>
+  </form><br>
 {% endif %}
 </div>
-
 {% if books %}
 <div class="container bg-light text-dark">
   <table id="example" class="table table-striped display" style="width:100%">
@@ -166,9 +108,6 @@
     </tbody>
   </table>
 </div>
-
 {% endblock%}
-
-
 {% block footer %}
 {% endblock %}

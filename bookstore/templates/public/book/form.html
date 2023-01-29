@@ -1,12 +1,9 @@
 {% extends 'public/book/base.html' %} 
-
 {% block title %} 
 Bookstore Management System 
 {% endblock %} 
-
 {% block stylesheet %} 
 {% endblock %} 
-
 {% block main %}
 <div class="container py-4" style="width: 40%">
   <div class="row mb-3">
@@ -65,7 +62,6 @@ Bookstore Management System
     <div class="row mb-3">
       <div class="col-sm-12 text-center">
         {% if book_action != "add" %}<input type="hidden" name="book_id" value="{{ book_dictionary.book_id }}">{% endif %}
-        
         <input type="hidden" name="book_action" value="{% if book_action %}{{ book_action }}{% else %}add{% endif %}">
         <button  class="btn btn-outline-light btn-sm" type="submit" style="width:140px" name="book_action_save" value="{% if book_action %}{{ book_action }}{% else %}add{% endif %}">SAVE</button>
       </div>
@@ -73,7 +69,5 @@ Bookstore Management System
   </form>
 </div>
 {% endblock %}
-
 {% block footer %}
 {% endblock %}
-

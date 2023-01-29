@@ -7,20 +7,15 @@ from flask import Flask, render_template, request, redirect, make_response, json
 from .models import User, Book, Review
 from functools import wraps
 from datetime import datetime, timedelta
-
 bcrypt = Bcrypt(app)
-
-
 # =====================================================================================================================
 # User functions
-
 # ---------------------------------------------------------------------------------------------------------------------
 # 
 # Route to index page
 @app.route("/")
 def index():
     return render_template("public/book/base.html")
-
 # ---------------------------------------------------------------------------------------------------------------------
 # 
 # Route to register page
@@ -31,13 +26,11 @@ def register():
     username = request.form["username"].strip()
     password = request.form["password"]
     if username and password:
-
         hashed_password = bcrypt.generate_password_hash(password)
         row_affected = User.add_user(username, hashed_password)
         return f"The user {username} is added successfully."
     else:
         return "problems on username/password"
-
 # ---------------------------------------------------------------------------------------------------------------------
 # 
 # Route to logout page
@@ -50,7 +43,6 @@ def logout():
     if "token" in session:
         del session["token"]
     return render_template("public/book/base.html")
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Check login status
 def is_logged(func):
@@ -60,7 +52,6 @@ def is_logged(func):
             return redirect(url_for("login"))
         return func(*args, **kwargs)
     return decorated
-
 # ---------------------------------------------------------------------------------------------------------------------
 # 
 # Route to login page
@@ -81,6 +72,7 @@ def login():
                 # If the passwords are matched, store the usename in the session
                 if bcrypt.check_password_hash(hashed_password, password):
                     session["username"] = username
+                    user = User.login_time(username)
                     # Create token from JWT                    
                     token = jwt.encode({
                         "user": username,
@@ -109,7 +101,6 @@ def login():
     # GET method to load login page
     else:        
         return render_template("public/book/login.html")
-
 # ---------------------------------------------------------------------------------------------------------------------
 # JWT
 # Depreciated but keep it for future reference
@@ -126,9 +117,7 @@ def token_required(func):
         except:
             return jsonify({"Alert": "Invalid token."}), 403
     return decorated
-
 # ---------------------------------------------------------------------------------------------------------------------
-
 # login_required decorated
 def login_required(func):
     @wraps(func)
