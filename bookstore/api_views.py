@@ -67,7 +67,7 @@ def book_api_get_one(uuid):
         return jsonify(result), 400
     book = Book.api_one_book(uuid)
     book_dictionary = {}
-    if len(book) == 1:
+    if book:
         book_dictionary = Book.get_book_dictionary(book, True)
         return jsonify(book_dictionary)
     else:
@@ -86,7 +86,7 @@ def book_api_add_one():
             book = Book.add_book(**data)
             book = Book.find_title(data["title"])
             if len(book) == 1:
-                book_dictionary = Book.get_book_dictionary(book)
+                book_dictionary = Book.get_book_dictionary(book, True)
             return jsonify(book_dictionary)   
         else:
             return make_response({"message": f"The book {data['title']} already exists"}, 400)
@@ -108,7 +108,7 @@ def book_api_update_one():
         return jsonify({"message": "Bad Request: uuid is required"}), 400
     book = Book.find_uuid(data["uuid"])
     if len(book) == 1:
-        book_dictionary = Book.get_book_dictionary(book)
+        book_dictionary = Book.get_book_dictionary(book, True)
         uuid = book_dictionary["uuid"]
         book = Book.update_book_uuid(**data)
         book = Book.api_one_book(uuid)

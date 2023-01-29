@@ -87,7 +87,8 @@ class Book(db.Model):
 # ---------------------------------------------------------------------------------------------------------------------
     # Create find_title function to find the book by title
     def find_title(title):
-        book = db.session.query(Book).filter(Book.book_title == title).all()
+        book = db.session.query(Book.book_id, Book.book_uuid, Book.book_title, Book.book_author, Book.book_description, Book.book_quantity, Book.book_created_date, Book.book_updated_date).filter(Book.book_title == title).all()
+        # book = db.session.query(Book).filter(Book.book_title == title).all()
         return book
 # ---------------------------------------------------------------------------------------------------------------------
     # Create find_uuid function to find the book by uuid
@@ -140,16 +141,16 @@ class Book(db.Model):
             quantity_max = search_dictionary["quantity_max"]
         if type == "title":
             if title:
-                books = db.session.query(Book).filter(Book.book_title.like(f"%{title}%")).order_by(asc(Book.book_id)).all()
+                books = db.session.query(Book).filter(Book.book_title.like(f"%{title}%")).order_by(desc(Book.book_id)).all()
         elif type == "author":
             if author:
-                books = db.session.query(Book).filter(Book.book_author.like(f"%{author}%")).order_by(asc(Book.book_id)).all()
+                books = db.session.query(Book).filter(Book.book_author.like(f"%{author}%")).order_by(desc(Book.book_id)).all()
         elif type == "description":
             if description:
-                books = db.session.query(Book).filter(Book.book_description.like(f"%{description}%")).order_by(asc(Book.book_id)).all()
+                books = db.session.query(Book).filter(Book.book_description.like(f"%{description}%")).order_by(desc(Book.book_id)).all()
         elif type == "quantity":
             if quantity_min and quantity_max:
-                books = db.session.query(Book).filter(Book.book_quantity.between(quantity_min, quantity_max)).order_by(asc(Book.book_id)).all()
+                books = db.session.query(Book).filter(Book.book_quantity.between(quantity_min, quantity_max)).order_by(desc(Book.book_id)).all()
                 print("model", books)
         else:
             books = None
@@ -163,6 +164,7 @@ class Book(db.Model):
 # ---------------------------------------------------------------------------------------------------------------------
     # Create api_one_book function to get one book without the field of book_id
     def api_one_book(book_uuid):
+        
         # book = db.session.query(Book).filter_by(book_id=book_id).first()        
         book = db.session.query(Book.book_uuid, Book.book_title, Book.book_author, Book.book_description, Book.book_quantity, Book.book_created_date, Book.book_updated_date).filter(Book.book_uuid == book_uuid).all()
         return book
@@ -171,7 +173,7 @@ class Book(db.Model):
     # If is_API is True, it does not get book_id
     def get_book_dictionary(book, is_API=False):
         book_dictionary = {}
-        if len(book) == 1:
+        if is_API:
             book_dictionary = {
                 "uuid": str(book[0].book_uuid),
                 "title": book[0].book_title,
@@ -181,9 +183,17 @@ class Book(db.Model):
                 "createdDate": book[0].book_created_date.isoformat(),
                 "updatedDate": book[0].book_updated_date.isoformat(),
             }
-
-            if not is_API:
-                book_dictionary["id"] = book[0].book_id
+        else:
+            book_dictionary = {
+                "id": book.book_id,
+                "uuid": str(book.book_uuid),
+                "title": book.book_title,
+                "author": book.book_author,
+                "description": book.book_description,
+                "quantity": book.book_quantity,
+                "createdDate": book.book_created_date.isoformat(),
+                "updatedDate": book.book_updated_date.isoformat(),
+            }
         return book_dictionary
 # =====================================================================================================================
 # Review Model

@@ -76,6 +76,15 @@ def book_form():
             # Submit Book form for editing book
             else:
                 message, book_dictionary = get_book_dictionary_message(request.form)
+                title = book_dictionary["title"]
+                book = Book.find_title(title)
+                # If a Book exists, notify the user of the duplicate books
+                if book:
+                    message =f"The <b>{title}</b> exists in our records."
+                    flash(message)
+                    book_dictionary["id"] = book_id
+                    return render_template("public/book/form.html", book_action="edit", book_dictionary=book_dictionary)
+
                 book_dictionary["id"] = book_id
                 book = Book.update_book(**book_dictionary)
                 message = f"The book <b>{book_dictionary['title']}</b> is updated successfully." 
@@ -85,6 +94,7 @@ def book_form():
                 return render_template("public/book/form.html", book_action=book_action, book_dictionary=book_dictionary)
         # If book_action is "remove", delete Book by book id
         elif book_action == "remove":
+            search_dictionary = {}
             book_id = request.form["book_id"] if "book_id" in request.form else None
             # If book_id found, delete Book by book_id
             if book_id != "":                
@@ -94,13 +104,16 @@ def book_form():
                 if book:                    
                     message = f"The book <b>{title}</b> is deleted successfully."
                     flash(message)
-                    books = Book.all_books()
-                    return render_template("public/book/index.html", books=books)
+                    search_dictionary = session["search_dictionary"]
+                    books = Book.book_search(search_dictionary)
+                    # books = Book.all_books()
+                    return render_template("public/book/index.html", books=books, search_dictionary=search_dictionary)
                 else:
                     message = f"No book is found to be deleted."
                     flash(message)
-                    books = Book.all_books()
-                    return render_template("public/book/index.html", books=books)
+                    search_dictionary = session["search_dictionary"]
+                    books = Book.book_search(search_dictionary)
+                    return render_template("public/book/index.html", books=books, search_dictionary=search_dictionary)
             # if book id is not found, flash message to notify the user
             else:
                 message = f"No book id is found."
@@ -125,6 +138,9 @@ def book_search():
     # Submit Book search request
     else:        
         search_dictionary = {}
+        if "search_dictionary" in session:
+            del session["search_dictionary"]
+
         for key, value in request.form.items():
             search_dictionary[key] = value.strip()            
         # If the search criteria are missing, store the flash message
@@ -156,6 +172,7 @@ def book_search():
             search_input = search_dictionary["search_input"]
             quantity_min = search_dictionary["quantity_min"]
             quantity_max  = search_dictionary["quantity_max"]
+            session["search_dictionary"] = search_dictionary
             if type == "title" or type == "author" or type == "description" and search_input:                
                 books = Book.book_search(search_dictionary)
             elif type == "quantity" and quantity_min and quantity_max:

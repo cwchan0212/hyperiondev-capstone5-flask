@@ -26,9 +26,11 @@ $(document).ready(function () {
     dom: '<"top"flip>rt<"bottom"><"clear">',
     paging: true,
     searching: false,
-    scrollY: "500px",
-    scrollCollapse: true,
+    ordering: false,
+    // scrollY: "500px",
+    // scrollCollapse: true,
     bDestroy: true,
+
     fnDrawCallback: function (oSettings) {
       $(".paginate_button.current").addClass("btn btn-outline-light btn-sm");
       $(".standardDataTable")

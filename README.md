@@ -5,7 +5,7 @@
 
 This application is a web-based bookstore management system that allows the user to manage the store's inventory by adding, updating, deleting, and searching for books in the database. It was adapted from my previous capstone project and converted into a web application using the Flask framework and SQLite. Additionally, REST API has been added to the web portal to demonstrate the use of REST API.
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/01.png" width="600"><br>
 <i>5.1 The overview of Bookstore Management System </i></p>
 
 ### Getting Started
@@ -207,7 +207,7 @@ Opening a web browser and navigating to **http://127.0.0.1:5000/**. This will al
 The user is required to enter a **username** and **password**. If the user enters an invalid username or password, an error message will be displayed and the user will be prompted to try again.
 
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/02.png" width="600"><br>
 <i>5.2 Login screen</i></p>
 
 > Note: The test accounts are used for testing purposes
@@ -216,66 +216,76 @@ The user is required to enter a **username** and **password**. If the user enter
 
 The logged user is allowed to add, modify, delete books and make search queries based on different criteria such as book title, author, description, and quantity ranges. Non-logged user is also allowed to make search queries but with the **exception of quantity range** as a search criteria.
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.3 Add new book in the form</i></p>
+<p align="center"><img src="assets/img/03.png" width="600"><br>
+<i>5.3 Click the add new book button</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.4 The new book is added successfully</i></p>
+<p align="center"><img src="assets/img/04.png" width="600"><br>
+<i>5.4 Add new book in the form</i></p>
 
+<p align="center"><img src="assets/img/05.png" width="600"><br>
+<i>5.5 The new book is added successfully</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.5 Update book in the form</i></p>
+<p align="center"><img src="assets/img/06.png" width="600"><br>
+<i>5.6 Click the edit book button</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.6 The book is updated successfully. </i></p>
+<p align="center"><img src="assets/img/07.png" width="600"><br>
+<i>5.7 Edit book in the form</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.7 Click the delete button to delete book</i></p>
+<p align="center"><img src="assets/img/08.png" width="600"><br>
+<i>5.8 The book is updated successfully. </i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.8 Search book by title, author, description and quantity range </i></p>
+<p align="center"><img src="assets/img/09.png" width="600"><br>
+<i>5.9 Click the delete button</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.9 The user is required to enter the minimum quantity and maximum quantity as quantity is the search criteria. </i></p>
+<p align="center"><img src="assets/img/10.png" width="600"><br>
+<i>5.10 The book is deleted successfully. </i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.10 The quantity is not shown to the non-logged user. </i></p>
+<p align="center"><img src="assets/img/11.png" width="600"><br>
+<i>5.11 Search book by title, author, description and quantity range </i></p>
+
+<p align="center"><img src="assets/img/12.png" width="600"><br>
+<i>5.12 Search books by title</i></p>
+
+<p align="center"><img src="assets/img/13.png" width="600"><br>
+<i>5.13 The user is required to enter the minimum quantity and maximum quantity as quantity is the search criteria. </i></p>
+
+> Note: The quantity is not shown to the non-logged user.
 
 
 #### REST API
 The logged user is allowed to use REST API to add, update, delete book as well make queries. The output will be displayed in JSON format.
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.11 Click Get all books to get the records of all book </i></p>
+<p align="center"><img src="assets/img/14.png" width="600"><br>
+<i>5.14 Click Get all books to get the records of all book </i></p>
 
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.12 The output is shown in the JSON format for <b>Get all</b></i></p>
+<p align="center"><img src="assets/img/15.png" width="600"><br>
+<i>5.15 The output is shown in the JSON format for <b>Get all</b></i></p>
 
 > Note: For testing purpose, one book of the books will be passed to next sections for **Get 1**, **Update 1** and **Delete 1** respectively. 
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.13 Click <b>Get 1</b> to get the record of 1 book</i></p>
+<p align="center"><img src="assets/img/16.png" width="600"><br>
+<i>5.16 Click <b>Get 1</b> to get the record of 1 book</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
-<i>5.14 The output is shown in the JSON format for <b>Get 1</b></i></p>
+<p align="center"><img src="assets/img/17.png" width="600"><br>
+<i>5.17 The output is shown in the JSON format for <b>Get 1</b></i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/18.png" width="600"><br>
 <i>5.15 Click <b>Add 1</b> to add the new book</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/19.png" width="600"><br>
 <i>5.16 The output is shown in the JSON format for <b>Add 1</b></i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/20.png" width="600"><br>
 <i>5.17 Click <b>Update 1</b> to update the book</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/21.png" width="600"><br>
 <i>5.18 The output is shown in the JSON format for <b>Update 1</b></i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/22.png" width="600"><br>
 <i>5.19 Click <b>Delete 1</b> to delete the book</i></p>
 
-<p align="center"><img src="capstone_project/assets/images/02.png" width="600"><br>
+<p align="center"><img src="assets/img/23.png" width="600"><br>
 <i>5.20 The output is shown in the JSON format for <b>Delete 1 </b></i></p>
 
 ### Acknowledgments

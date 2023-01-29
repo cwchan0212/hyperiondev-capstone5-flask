@@ -91,7 +91,7 @@
           <td class="align-top text-dark">{{ book.book_updated_date |datetime }} </td>
           {% if 'username' in session %}
           <form action="/book/form" method="post">
-          <td class="align-top text-dark">
+          <td class="align-top text-dark text-center">
             <input type="hidden" name="book_id" value="{{ book.book_id }}" />
             <button class="btn btn-outline-dark btn-sm" style="padding-left:15px; width:30px" type="submit" name="book_action" value="edit"><i class="fa-solid fa-pen-to-square"></i></button>
             <button class="btn btn-outline-dark btn-sm" style="padding-left:15px; width:30px" type="submit" name="book_action" value="remove"><i class="fa-solid fa-trash"></i></button>
