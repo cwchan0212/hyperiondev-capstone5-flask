@@ -6,7 +6,7 @@
 This application is a web-based bookstore management system that allows the user to manage the store's inventory by adding, updating, deleting, and searching for books in the database. It was adapted from my previous capstone project and converted into a web application using the Flask framework and SQLite. Additionally, REST API has been added to the web portal to demonstrate the use of REST API.
 
 <p align="center"><img src="assets/img/01.png" width="600"><br>
-<i>5.1 The overview of Bookstore Management System </i></p>
+<i>5.1 The overview of the Bookstore Management System </i></p>
 
 ### Getting Started
 
@@ -32,7 +32,7 @@ git clone https://github.com/cwchan0212/hyperiondev-capstone5-flask.git
 cd bookstore
 ```
 
-3. Create a virtual environment in **venv** folder 
+3. Create a virtual environment in the **venv** folder 
 ```
 py -3 -m venv venv
 ```
@@ -59,7 +59,7 @@ pip install python-dotenv
 pip install SQLAlchemy
 ```
 
-Alternatively, the user can installs the packages on the file  requirements.txt 
+Alternatively, the user can install the packages on the file  requirements.txt 
 ```
 pip install -r requirements.txt
 ```
@@ -100,7 +100,7 @@ set debug mode on
 flask --app appName --debug run  --host=0.0.0.0
 ```
 
-After installed python-dotenv and configured .env and .flashenv, the user can type the following command to start the server.
+After installing python-dotenv and configuring .env and .flashenv, the user can type the following command to start the server.
 
 ```
 flask run
@@ -174,7 +174,7 @@ run.py
 ### Model
 #### User 
 The User Model has several fields
-- user_id as primary key
+- user_id as the primary key
 - user_username 
 - user_password
 - user_created_date
@@ -182,7 +182,7 @@ The User Model has several fields
 
 #### Book
 The Book Model also has several fields
-- book_id as primary key
+- book_id as the primary key
 - book_uuid
 - book_title
 - book_author
@@ -199,8 +199,8 @@ Opening a web browser and navigating to **http://127.0.0.1:5000/**. This will al
 
 3. **User login system**: Having a login system in place will allow you to restrict access to certain features of the application to only logged-in users.
 4. **CRUD functions** and **search queries**: Allowing users to add, modify, delete books and make search queries based on different criteria such as book title, author, description, and quantity ranges.
-5. Search query for **non-logged users**: Allowing non-logged users to make search queries, but with the **exception of quantity range** as a search criteria.
-6. **Restricting access to the REST API**: Limit the access to your REST API only to logged-in users to ensure that only authorised users can perform certain actions.
+5. Search query for **non-logged users**: Allowing non-logged users to make search queries, but with the **except for quantity range** as a search criterion.
+6. **Restricting access to the REST API**: Limit access to your REST API only to logged-in users to ensure that only authorised users can perform certain actions.
 
 #### Login
 
@@ -214,13 +214,14 @@ The user is required to enter a **username** and **password**. If the user enter
 
 #### Book
 
-The logged user is allowed to add, modify, delete books and make search queries based on different criteria such as book title, author, description, and quantity ranges. Non-logged user is also allowed to make search queries but with the **exception of quantity range** as a search criteria.
+The logged user is allowed to **add**, **modify**, **delete** books and make **search queries** based on different criteria such as book title, author, description, and quantity ranges. Non-logged user is also allowed to make search queries but with the **except for quantity range** as a search criterion.
+
 
 <p align="center"><img src="assets/img/03.png" width="600"><br>
-<i>5.3 Click the add new book button</i></p>
+<i>5.3 Click the <b>Add Book</b> button</i></p>
 
 <p align="center"><img src="assets/img/04.png" width="600"><br>
-<i>5.4 Add new book in the form</i></p>
+<i>5.4 Add a new book in the form</i></p>
 
 <p align="center"><img src="assets/img/05.png" width="600"><br>
 <i>5.5 The new book is added successfully</i></p>
@@ -241,28 +242,28 @@ The logged user is allowed to add, modify, delete books and make search queries 
 <i>5.10 The book is deleted successfully. </i></p>
 
 <p align="center"><img src="assets/img/11.png" width="600"><br>
-<i>5.11 Search book by title, author, description and quantity range </i></p>
+<i>5.11 Search book by <b>title</b>, <b>author</b>, <b>description</b> and <b>quantity range</b> </i></p>
 
 <p align="center"><img src="assets/img/12.png" width="600"><br>
 <i>5.12 Search books by title</i></p>
 
 <p align="center"><img src="assets/img/13.png" width="600"><br>
-<i>5.13 The user is required to enter the minimum quantity and maximum quantity as quantity is the search criteria. </i></p>
+<i>5.13 The user is required to enter the <b>minimum</b> quantity and <b>maximum</b> quantity as <b>quantity</b> is a search criterion. </i></p>
 
 > Note: The quantity is not shown to the non-logged user.
 
 
 #### REST API
-The logged user is allowed to use REST API to add, update, delete book as well make queries. The output will be displayed in JSON format.
+The logged user is allowed to use **REST API** to **add**, **update**, and **delete** books as well as make **queries**. The output will be displayed in **JSON format**.
 
 <p align="center"><img src="assets/img/14.png" width="600"><br>
-<i>5.14 Click Get all books to get the records of all book </i></p>
+<i>5.14 Click <b>Get all</b> books to get the records of all book </i></p>
 
 
 <p align="center"><img src="assets/img/15.png" width="600"><br>
 <i>5.15 The output is shown in the JSON format for <b>Get all</b></i></p>
 
-> Note: For testing purpose, one book of the books will be passed to next sections for **Get 1**, **Update 1** and **Delete 1** respectively. 
+> Note: For testing purposes, one book of the books will be passed to the next sections for **Get 1**, **Update 1** and **Delete 1** respectively. 
 
 <p align="center"><img src="assets/img/16.png" width="600"><br>
 <i>5.16 Click <b>Get 1</b> to get the record of 1 book</i></p>
@@ -288,5 +289,5 @@ The logged user is allowed to use REST API to add, update, delete book as well m
 <p align="center"><img src="assets/img/23.png" width="600"><br>
 <i>5.20 The output is shown in the JSON format for <b>Delete 1 </b></i></p>
 
-### Acknowledgments
+### Acknowledgements
 This project was inspired by <a href="https://www.hyperiondev.com" target="_blank">HyperionDev</a>.
