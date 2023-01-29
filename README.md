@@ -293,7 +293,7 @@ The logged user is allowed to use **REST API** to **add**, **update**, and **del
 **Unauthorized Access to API**
 Unauthorized users can access the API and retrieve sensitive information, compromising the **security** of the system.
 
-#### Solution
+### Solution
 **Session-based Authentication**
 To prevent unauthorized access to the API, we have implemented **session-based authentication**. Only logged-in users can access the API and retrieve information. The API **returns an error message to unlogged users**, prompting them to login before accessing the API.
 
