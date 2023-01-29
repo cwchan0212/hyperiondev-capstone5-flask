@@ -1,5 +1,5 @@
 ## Capstone Project 5 - Bookstore Management (Flask)
-:arrow_right: Preview
+:arrow_right: <a href="https://6gg9.short.gy/ZQPGgN" target="_blank">Preview</a>
 
 ### Introduction
 
