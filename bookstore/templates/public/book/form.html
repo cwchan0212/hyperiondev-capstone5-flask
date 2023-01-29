@@ -49,19 +49,19 @@ Bookstore Management System
     <div class="row mb-3">
       <label for="quantity" class="col-sm-3 col-form-label">Created on</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="created_date" name="created_date" value="{% if 'created_date' in book_dictionary %}{{ book_dictionary.created_date|datetime }}{% endif %}" disabled />
+        <input type="text" class="form-control" id="created_date" name="created_date" value="{% if 'createdDate' in book_dictionary %}{{ book_dictionary.createdDate|datetime }}{% endif %}" disabled />
       </div>
     </div>
     <div class="row mb-3">
       <label for="quantity" class="col-sm-3 col-form-label">Updated on</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="updated_date" name="updated_date" value="{% if 'updated_date' in book_dictionary %}{{ book_dictionary.updated_date|datetime }}{% endif %}" disabled />
+        <input type="text" class="form-control" id="updated_date" name="updated_date" value="{% if 'updatedDate' in book_dictionary %}{{ book_dictionary.updatedDate|datetime }}{% endif %}" disabled />
       </div>
     </div>
 {% endif %}
     <div class="row mb-3">
       <div class="col-sm-12 text-center">
-        {% if book_action != "add" %}<input type="hidden" name="book_id" value="{{ book_dictionary.book_id }}">{% endif %}
+        {% if book_action != "add" %}<input type="hidden" name="book_id" value="{{ book_dictionary.id }}">{% endif %}
         <input type="hidden" name="book_action" value="{% if book_action %}{{ book_action }}{% else %}add{% endif %}">
         <button  class="btn btn-outline-light btn-sm" type="submit" style="width:140px" name="book_action_save" value="{% if book_action %}{{ book_action }}{% else %}add{% endif %}">SAVE</button>
       </div>

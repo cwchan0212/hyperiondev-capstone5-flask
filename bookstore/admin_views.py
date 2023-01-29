@@ -39,21 +39,18 @@ def logout():
     # If username session exists, delete username session
     if "username" in session:
         del session["username"]
-    # If token session exists, delete token session
+    # If a token session exists, delete the token session
     if "token" in session:
         del session["token"]
     return render_template("public/book/base.html")
 # ---------------------------------------------------------------------------------------------------------------------
 # Check login status
-def is_logged(func):
-    @wraps(func)
-    def decorated(*args, **kwargs):
-        if "username" not in session:
-            return redirect(url_for("login"))
-        return func(*args, **kwargs)
-    return decorated
+def is_logged():
+    status = False
+    if "username" in session and "token" in session:
+        status = True
+    return status
 # ---------------------------------------------------------------------------------------------------------------------
-# 
 # Route to login page
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -62,18 +59,18 @@ def login():
     if request.method == "POST": 
         username = request.form["username"].strip()
         password = request.form["password"]
-        # if username and password exists, check the existence of username and correctness of password
+        # if username and password exist, check the existence of username and correctness of the password
         if username and password:
             user = User.find_user(username)
             token = None
-            # If the username is found, check the correctness of password
+            # If the username is found, check the correctness of the password
             if user:
                 hashed_password = user[0].user_password
-                # If the passwords are matched, store the usename in the session
+                # If the passwords are matched, store the username in the session
                 if bcrypt.check_password_hash(hashed_password, password):
                     session["username"] = username
                     user = User.login_time(username)
-                    # Create token from JWT                    
+                    # Create a token from JWT                    
                     token = jwt.encode({
                         "user": username,
                         "expiration": str(datetime.utcnow() + timedelta(seconds=300))
@@ -83,19 +80,19 @@ def login():
                     # Store token session
                     session["token"] = token
                     return render_template("public/book/base.html")
-                # If the username/password is not matched, flash message to notify the user
+                # If the username/password is not matched, flash a message to notify the user
                 else:
-                    message = f"The useranme/password is not matched."
+                    message = f"The username/password is not matched."
                     flash(message)
                     return render_template("public/book/login.html")
-            # If no username is matched, flash message to notify the user
+            # If no username is matched, flash a message to notify the user
             else:                
-                message = f"The useranme/password is not matched."
+                message = f"The username/password is not matched."
                 flash(message)
                 return render_template("public/book/base.html")
-        # If the username/password is blank, flash message to notify the user
+        # If the username/password is blank, flash a message to notify the user
         else:
-            message = f"The useranme/password cannot be blank."
+            message = f"The username/password cannot be blank."
             flash(message)
             return render_template("public/book/base.html")
     # GET method to load login page

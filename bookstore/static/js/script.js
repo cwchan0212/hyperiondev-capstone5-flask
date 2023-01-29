@@ -23,7 +23,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#example").DataTable({
     fixedHeader: true,
-    dom: '<"top"fli>rt<"bottom"p><"clear">',
+    dom: '<"top"flip>rt<"bottom"><"clear">',
     paging: true,
     searching: false,
     scrollY: "500px",

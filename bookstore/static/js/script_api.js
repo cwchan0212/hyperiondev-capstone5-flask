@@ -50,6 +50,7 @@ $(document).ready(function () {
         dataType: "json",
         success: function (response) {
           let one_index = Math.floor(Math.random() * response.length);
+          console.log("uuid", response[one_index]["uuid"])
           let one_uuid = response[one_index]["uuid"];
 
           let put_index = Math.floor(Math.random() * response.length);
@@ -74,8 +75,15 @@ $(document).ready(function () {
           $("#message").html("<i>Get JSON for all books...</i>");
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          $("#json_result").text(textStatus);
-        },
+          if (jqXHR.status >= 400 && jqXHR.status < 600) {
+            // console.log("Error: " + jqXHR.responseText);
+            $("#json_result").text(JSON.stringify(jqXHR.responseJSON, null, 2));
+            location.href = "#json_result";
+          } else {
+            $("#json_result").text(textStatus);
+            location.href = "#json_result";
+          }
+        },        
       });
     });
 
@@ -145,7 +153,15 @@ $(document).ready(function () {
             $("#message").html("<i>Get JSON for adding 1 book...</i>");
           },
           error: function (jqXHR, textStatus, errorThrown) {
-            $("#json_result").text(textStatus);
+
+            if (jqXHR.status >= 400 && jqXHR.status < 600) {
+              // console.log("Error: " + jqXHR.responseText);
+              $("#json_result").text(JSON.stringify(jqXHR.responseJSON, null, 2));
+              location.href = "#json_result";
+            } else {
+              $("#json_result").text(textStatus);
+              location.href = "#json_result";
+            }
           },
         });
       }
@@ -158,7 +174,6 @@ $(document).ready(function () {
       let description = $("#update_book_description").val().trim();
       let quantity = $("#update_book_quantity").val().trim();
       $("#message").html("");
-
 
       if (!title) {
         $("#message").html("<i>The title is blank.</i>");
@@ -193,7 +208,15 @@ $(document).ready(function () {
             $("#message").html("<i>Get JSON for updating 1 book...</i>");
           },
           error: function (jqXHR, textStatus, errorThrown) {
-            $("#json_result").text(textStatus);
+            if (jqXHR.status >= 400 && jqXHR.status < 600) {
+              // console.log("Error: " + jqXHR.responseText);
+              $("#json_result").text(JSON.stringify(jqXHR.responseJSON, null, 2));
+              location.href = "#json_result";
+            } else {
+              $("#json_result").text(textStatus);
+              location.href = "#json_result";
+            }
+
           },
         });
       }
@@ -219,11 +242,22 @@ $(document).ready(function () {
             $("#message").html("<i>Get JSON for deleting 1 book...</i>");
           },
           error: function (jqXHR, textStatus, errorThrown) {
-            $("#json_result").text(textStatus);
+            if (jqXHR.status >= 400 && jqXHR.status < 600) {
+              // console.log("Error: " + jqXHR.responseText);
+              $("#json_result").text(JSON.stringify(jqXHR.responseJSON, null, 2));
+              location.href = "#json_result";
+            } else {
+              $("#json_result").text(textStatus);
+              location.href = "#json_result";
+            }
           },
         });
       }
     });
   });
+
+
+  
+
 
   // ------------------------------------------------------------------------------------------------------------------

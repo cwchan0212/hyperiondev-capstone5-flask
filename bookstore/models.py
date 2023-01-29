@@ -7,10 +7,8 @@ from sqlalchemy import Column, Integer, String, DateTime, Text, asc, desc, exist
 from flask_sqlalchemy import SQLAlchemy
 # Import the app from bookstore
 from bookstore import app
-
 # Use for setup database, later to use back bookstore config
 # app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookstore-dev.db'
-
 # Create db session from SQLAlchmey with bookstore app
 db = SQLAlchemy(app)
 #----------------------------------------------------------------------------------------------------------------------
@@ -19,10 +17,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     user_username = db.Column(db.String(10), unique=True)
     user_password = db.Column(db.String(255), nullable=False)
-
     user_created_date = db.Column(db.DateTime, server_default=text("CURRENT_TIMESTAMP"))
     user_updated_date = db.Column(db.DateTime, server_default=text("CURRENT_TIMESTAMP"), onupdate=text("CURRENT_TIMESTAMP"))
-
 # ---------------------------------------------------------------------------------------------------------------------
 # Create add_user function to add the username and password
     def add_user(username, password):
@@ -59,8 +55,6 @@ class User(db.Model):
         except Exception as e:
             print(f"Error in retrieving user {e}")
         return user
-            
-
 #======================================================================================================================
 # Book Model
 class Book(db.Model):
@@ -75,12 +69,10 @@ class Book(db.Model):
     book_created_date = db.Column(db.DateTime, server_default=text("CURRENT_TIMESTAMP"))
     book_updated_date = db.Column(db.DateTime, server_default=text("CURRENT_TIMESTAMP"), onupdate=text("CURRENT_TIMESTAMP"))
     reviews = db.relationship('Review', backref='related_book', lazy=True)
-
 #======================================================================================================================
     # Create string representation for Book Model
     def __str__(self):
         return f"{self.book_id},{self.book_uuid},{self.book_title},{self.book_author},{self.book_description},{self.book_quantity}"
-
 # ---------------------------------------------------------------------------------------------------------------------
     # Create add_book function to adding the new book
     def add_book(title, author, description, quantity):
@@ -92,13 +84,11 @@ class Book(db.Model):
     def all_books():
         books = Book.query.order_by(desc(Book.book_id)).all()
         return books
-
 # ---------------------------------------------------------------------------------------------------------------------
     # Create find_title function to find the book by title
     def find_title(title):
         book = db.session.query(Book).filter(Book.book_title == title).all()
         return book
-
 # ---------------------------------------------------------------------------------------------------------------------
     # Create find_uuid function to find the book by uuid
     def find_uuid(uuid):
@@ -164,25 +154,22 @@ class Book(db.Model):
         else:
             books = None
         return books
-
-    
 # =====================================================================================================================
 # Book API
     # Create api_all_books function to get all books without the field of book_id
     def api_all_books():
         books = db.session.query(Book.book_uuid, Book.book_title, Book.book_author, Book.book_description, Book.book_quantity, Book.book_created_date, Book.book_updated_date).order_by(desc(Book.book_id)).all()    
         return books
-
 # ---------------------------------------------------------------------------------------------------------------------
     # Create api_one_book function to get one book without the field of book_id
     def api_one_book(book_uuid):
         # book = db.session.query(Book).filter_by(book_id=book_id).first()        
         book = db.session.query(Book.book_uuid, Book.book_title, Book.book_author, Book.book_description, Book.book_quantity, Book.book_created_date, Book.book_updated_date).filter(Book.book_uuid == book_uuid).all()
         return book
-    
 # ---------------------------------------------------------------------------------------------------------------------
     # Create get_book_dictionary function to convert the book list to dictionary 
-    def get_book_dictionary(book):
+    # If is_API is True, it does not get book_id
+    def get_book_dictionary(book, is_API=False):
         book_dictionary = {}
         if len(book) == 1:
             book_dictionary = {
@@ -191,11 +178,13 @@ class Book(db.Model):
                 "author": book[0].book_author,
                 "description": book[0].book_description,
                 "quantity": book[0].book_quantity,
-                "created_date": book[0].book_created_date.isoformat(),
-                "updated_date": book[0].book_updated_date.isoformat(),
-            }  
-        return book_dictionary
+                "createdDate": book[0].book_created_date.isoformat(),
+                "updatedDate": book[0].book_updated_date.isoformat(),
+            }
 
+            if not is_API:
+                book_dictionary["id"] = book[0].book_id
+        return book_dictionary
 # =====================================================================================================================
 # Review Model
 class Review(db.Model):
