@@ -289,5 +289,16 @@ The logged user is allowed to use **REST API** to **add**, **update**, and **del
 <p align="center"><img src="assets/img/23.png" width="600"><br>
 <i>5.20 The output is shown in the JSON format for <b>Delete 1 </b></i></p>
 
+### Known Issue 
+**Unauthorized Access to API**
+Unauthorized users can access the API and retrieve sensitive information, compromising the **security** of the system.
+
+#### Solution
+**Session-based Authentication**
+To prevent unauthorized access to the API, we have implemented **session-based authentication**. Only logged-in users can access the API and retrieve information. The API **returns an error message to unlogged users**, prompting them to login before accessing the API.
+
+This solution ensures **secure data exchange** and **protects sensitive information** from unauthorized access.
+
+
 ### Acknowledgements
 This project was inspired by <a href="https://www.hyperiondev.com" target="_blank">HyperionDev</a>.

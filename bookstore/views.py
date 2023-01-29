@@ -3,6 +3,7 @@ from datetime import datetime
 from bookstore import app
 from flask import Flask, render_template, request, redirect, make_response, jsonify, flash, session, url_for
 from .models import User, Book, Review
+from .admin_views import is_logged
 # =====================================================================================================================
 # Book functions
 # 
@@ -20,6 +21,10 @@ def book_contact():
 # Route to Book - form (add/edit function)
 @app.route("/book/form", methods = ["POST"]) 
 def book_form():
+    login_status = is_logged()
+    if not login_status:
+        return render_template("public/book/base.html")
+
     book_action = request.form["book_action"] if "book_action" in request.form else ""
     book_action_save = request.form["book_action_save"] if "book_action_save" in request.form else ""
     message, book_dictionary = None, {}
@@ -129,6 +134,9 @@ def book_form():
 # Route to Book Search page
 @app.route("/book/search", methods = ["GET", "POST"])
 def book_search():
+    login_status = is_logged()
+    if not login_status:
+        return render_template("public/book/base.html")
     message = ""
     search_dictionary = {}
     books = None
