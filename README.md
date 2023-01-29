@@ -64,7 +64,7 @@ Alternatively, the user can install the packages on the file  requirements.txt
 pip install -r requirements.txt
 ```
 
-7. Set environment variables in the .env and .flaskenv configuration file.
+7. Set **environment variables** in the **.env** and **.flaskenv** configuration file.
 
 .env
 ```
@@ -85,22 +85,22 @@ FLASK_PERMANENT_SESSION_LIFETIME=30
 FLASK_MAX_CONTENT_LENGTH=5
 ```
 
-8. Start development server
+8. **Start** development server
 
 Normally, the Flask server can be started by the following command:
 ```
 flask --app appName run
 ```
-Set the server visible externally
+Set the server **visible externally**
 ```
 flask --app appName run --host=0.0.0.0
 ```
-set debug mode on
+set **debug** mode **on**
 ```
 flask --app appName --debug run  --host=0.0.0.0
 ```
 
-After installing python-dotenv and configuring .env and .flashenv, the user can type the following command to start the server.
+After installing **python-dotenv** and configuring **.env** and **.flashenv**, the user can type the following command to start the server.
 
 ```
 flask run
