@@ -10,8 +10,9 @@ app.config["MAX_CONTENT_LENGTH"] = app.config['MAX_CONTENT_LENGTH'] * 1024 * 102
 print(f"It is a {app.config['ENV']} mode.")
 
 # Generate requirements.txt
-# pip3 freeze > requirements.txt
+# pip freeze > requirements.txt
 
 # Install requirements.txt
-# pip3 install -r requirements.txt
+# pip install -r requirements.txt --use-pep517
+
 
