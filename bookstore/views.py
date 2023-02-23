@@ -134,9 +134,9 @@ def book_form():
 # Route to Book Search page
 @app.route("/book/search", methods = ["GET", "POST"])
 def book_search():
-    login_status = is_logged()
-    if not login_status:
-        return render_template("public/book/base.html")
+    # login_status = is_logged()
+    # if not login_status:
+    #     return render_template("public/book/base.html")
     message = ""
     search_dictionary = {}
     books = None

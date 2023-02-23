@@ -194,7 +194,8 @@ The Book Model also has several fields
 ### Usage
 
 1. Starting the development server: You can do this by running the command **flask run** in the terminal.
-Opening a web browser and navigating to **http://127.0.0.1:5000/**. This will allow you to access the application on your local machine.
+
+2. Opening a web browser and navigating to **http://127.0.0.1:5000/**. This will allow you to access the application on your local machine.
 
 
 3. **User login system**: Having a login system in place will allow you to restrict access to certain features of the application to only logged-in users.
