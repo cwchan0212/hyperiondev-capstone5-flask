@@ -1,6 +1,9 @@
 ## Capstone Project 5 - Bookstore Management (Flask)
 :arrow_right: <a href="https://6gg9.short.gy/ZQPGgN" target="_blank">Preview</a>
 
+[hyperiondev-capstone5-flask](https://user-images.githubusercontent.com/7412075/228989946-7f370aab-888f-4aed-97a1-b2a23fdb117e.mp4
+)
+
 ### Introduction
 
 This application is a web-based bookstore management system that allows the user to manage the store's inventory by adding, updating, deleting, and searching for books in the database. It was adapted from my previous capstone project and converted into a web application using the Flask framework and SQLite. Additionally, REST API has been added to the web portal to demonstrate the use of REST API.
